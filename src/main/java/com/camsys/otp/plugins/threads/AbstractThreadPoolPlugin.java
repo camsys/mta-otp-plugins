@@ -15,7 +15,7 @@ public abstract class AbstractThreadPoolPlugin<T> implements Pluggable {
     @Override
     public void init(JsonNode config) {
         int nThreads = 1;
-        if (config != null) {
+        if (config != null && config.get("nThreads") != null) {
             nThreads = config.get("nThreads").asInt(1);
         }
         executor = Executors.newFixedThreadPool(nThreads);
