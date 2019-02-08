@@ -20,8 +20,8 @@ import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.util.EC2MetadataUtils;
 import com.camsys.otp.plugins.cloudwatch.metrics.CountMetrics;
+import com.camsys.otp.plugins.threads.AbstractThreadPoolPlugin;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.opentripplanner.plugin.Pluggable;
 import com.camsys.otp.plugins.cloudwatch.metrics.CloudWatchMetrics;
 import org.opentripplanner.updater.stoptime.TripUpdateStats;
 import org.slf4j.Logger;
@@ -35,11 +35,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class CloudWatchService implements Pluggable {
+public class CloudWatchService extends AbstractThreadPoolPlugin<TripUpdateStats> {
 
     private static final Logger _log = LoggerFactory.getLogger(CloudWatchService.class);
-
-    private static volatile CloudWatchService instance;
 
     private boolean _enabled = false;
 
@@ -61,6 +59,7 @@ public class CloudWatchService implements Pluggable {
 
     @Override
     public synchronized void init(JsonNode awsConfig) {
+        super.init(awsConfig);
         try {
             _awsConfig = awsConfig;
             _accessKey = getConfigValue("accessKey");
@@ -90,18 +89,12 @@ public class CloudWatchService implements Pluggable {
     }
 
     @Override
-    public void receive(Object message) {
-        if (message instanceof TripUpdateStats) {
-            publishStats((TripUpdateStats) message);
-        }
+    public Class<TripUpdateStats> getSubscription() {
+        return TripUpdateStats.class;
     }
 
     @Override
-    public List<Class<?>> getSubscriptions() {
-        return Collections.singletonList(TripUpdateStats.class);
-    }
-
-    public void publishStats(TripUpdateStats stats) {
+    public void process(TripUpdateStats stats) {
         if(enabled()){
 
             int appliedUpdates = stats.getAppliedUpdates();
@@ -187,17 +180,6 @@ public class CloudWatchService implements Pluggable {
             return _env + ":" + nameSpace;
         }
         return nameSpace;
-    }
-
-    public static CloudWatchService getInstance(){
-        if(instance == null){
-            synchronized (CloudWatchService.class) {
-                if(instance == null){
-                    instance = new CloudWatchService();
-                }
-            }
-        }
-        return instance;
     }
 
     @PreDestroy
