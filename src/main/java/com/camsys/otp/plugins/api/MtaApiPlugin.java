@@ -10,7 +10,6 @@ import java.util.List;
 public class MtaApiPlugin implements Pluggable, OTPApplication.ApiPlugin {
     @Override
     public void init(JsonNode config) {
-
     }
 
     public Object receive(Object message) {
