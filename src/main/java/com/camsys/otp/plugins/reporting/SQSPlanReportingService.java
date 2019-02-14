@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
-public class PlanReportingService extends AbstractThreadPoolPlugin<Response> {
+public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> {
 
-    private static Logger _log = LoggerFactory.getLogger(PlanReportingService.class);
+    private static Logger _log = LoggerFactory.getLogger(SQSPlanReportingService.class);
 
     private AmazonSQS _sqs;
 
