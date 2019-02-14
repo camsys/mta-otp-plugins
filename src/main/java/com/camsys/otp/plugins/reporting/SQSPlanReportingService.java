@@ -15,8 +15,6 @@ import org.opentripplanner.api.resource.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-
 public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> {
 
     private static Logger _log = LoggerFactory.getLogger(SQSPlanReportingService.class);
@@ -37,7 +35,6 @@ public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> 
         String accessKey = getConfigValue(config, "accessKey");
         String secretKey = getConfigValue(config, "secretKey");
         _queueUrl = getConfigValue(config, "queueUrl");
-        //_log.info("accesskey is {} secret key is {}", accessKey, secretKey);
         if (accessKey == null || secretKey == null || _queueUrl == null) {
             return;
         }
@@ -94,8 +91,6 @@ public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> 
         report.setToLon(toLon);
         Boolean arriveBy = Boolean.parseBoolean(response.requestParameters.get("arriveBy"));
         report.setArriveBy(arriveBy);
-        report.setRequestTime(response.debugOutput.getRequestDate());
-        report.setServerTime(new Date(response.debugOutput.getStartedCalculating()));
         return report;
     }
 

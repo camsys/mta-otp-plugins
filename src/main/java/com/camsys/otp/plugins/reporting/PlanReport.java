@@ -64,22 +64,6 @@ public class PlanReport {
         this.toLon = toLon;
     }
 
-    public Date getRequestTime() {
-        return requestTime;
-    }
-
-    public void setRequestTime(Date requestTime) {
-        this.requestTime = requestTime;
-    }
-
-    public Date getServerTime() {
-        return serverTime;
-    }
-
-    public void setServerTime(Date serverTime) {
-        this.serverTime = serverTime;
-    }
-
     public boolean isArriveBy() {
         return arriveBy;
     }
