@@ -10,9 +10,13 @@ public class PlanReport {
 
     private int typeId = PLAN_TYPE;
 
+    private String fromPlace;
+
     private double fromLat;
 
     private double fromLon;
+
+    private String toPlace;
 
     private double toLat;
 
@@ -32,6 +36,14 @@ public class PlanReport {
         this.typeId = typeId;
     }
 
+    public String getFromPlace() {
+        return fromPlace;
+    }
+
+    public void setFromPlace(String fromPlace) {
+        this.fromPlace = fromPlace;
+    }
+
     public double getFromLat() {
         return fromLat;
     }
@@ -46,6 +58,14 @@ public class PlanReport {
 
     public void setFromLon(double fromLon) {
         this.fromLon = fromLon;
+    }
+
+    public String getToPlace() {
+        return toPlace;
+    }
+
+    public void setToPlace(String toPlace) {
+        this.toPlace = toPlace;
     }
 
     public double getToLat() {

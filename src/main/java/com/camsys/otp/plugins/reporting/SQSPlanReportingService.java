@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.opentripplanner.api.resource.Response;
+import org.opentripplanner.common.model.GenericLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +64,7 @@ public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> 
         String body = reportToJson(report);
         if (body != null) {
             sendMessage(body);
+            _log.debug("Sent message {}", body);
         }
     }
 
@@ -79,19 +81,22 @@ public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> 
         PlanReport report = new PlanReport();
         String fromPlace = response.requestParameters.get("fromPlace");
         String toPlace = response.requestParameters.get("toPlace");
-        String[] fromPlaceTokens = fromPlace.split(",");
-        String[] toPlaceTokens = toPlace.split(",");
-        if (fromPlaceTokens.length != 2 || toPlaceTokens.length != 2) {
-            _log.error("Invalid input: fromPlace={}, toPlace={}", fromPlace, toPlace);
+        GenericLocation from = GenericLocation.fromOldStyleString(fromPlace);
+        GenericLocation to = GenericLocation.fromOldStyleString(toPlace);
+        if (from.hasCoordinate()) {
+            report.setFromLat(from.lat);
+            report.setFromLon(from.lng);
         }
-        Double fromLat = Double.parseDouble(fromPlaceTokens[0]);
-        Double fromLon = Double.parseDouble(fromPlaceTokens[1]);
-        Double toLat = Double.parseDouble(toPlaceTokens[0]);
-        Double toLon = Double.parseDouble(toPlaceTokens[1]);
-        report.setFromLat(fromLat);
-        report.setFromLon(fromLon);
-        report.setToLat(toLat);
-        report.setToLon(toLon);
+        if (to.hasCoordinate()) {
+            report.setToLat(to.lat);
+            report.setToLon(to.lng);
+        }
+        if (from.hasPlace()) {
+            report.setFromPlace(from.place);
+        }
+        if (to.hasPlace()) {
+            report.setToPlace(to.place);
+        }
         Boolean arriveBy = Boolean.parseBoolean(response.requestParameters.get("arriveBy"));
         report.setArriveBy(arriveBy);
         report.setRequestTime(response.debugOutput.getRequestDate());
