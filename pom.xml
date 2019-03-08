@@ -10,7 +10,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <aws.version>1.11.104</aws.version>
-    <otp.version>1.3.0.33-SNAPSHOT</otp.version>
+    <otp.version>1.3.0.34-SNAPSHOT</otp.version>
   </properties>
 
   <repositories>
