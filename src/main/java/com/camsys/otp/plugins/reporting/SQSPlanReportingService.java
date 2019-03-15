@@ -116,8 +116,4 @@ public class SQSPlanReportingService extends AbstractThreadPoolPlugin<Response> 
     private void sendMessage(String message) {
         _sqs.sendMessage(_queueUrl, message);
     }
-
-    private String getConfigValue(JsonNode config, String key) {
-        return config.has(key) ? config.get(key).asText() : null;
-    }
 }

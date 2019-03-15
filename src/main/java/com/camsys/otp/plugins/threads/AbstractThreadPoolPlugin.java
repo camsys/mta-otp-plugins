@@ -67,4 +67,8 @@ public abstract class AbstractThreadPoolPlugin<T> implements Pluggable, Rejected
     public abstract Class<T> getSubscription();
 
     public abstract void process(T message);
+
+    protected String getConfigValue(JsonNode config, String key) {
+        return config.has(key) ? config.get(key).asText() : null;
+    }
 }
