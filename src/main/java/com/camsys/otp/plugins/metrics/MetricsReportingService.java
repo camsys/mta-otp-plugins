@@ -39,30 +39,35 @@ public class MetricsReportingService extends AbstractThreadPoolPlugin<TripUpdate
     public void process(TripUpdateStats stats) {
         if(enabled()){
 
-            int appliedUpdates = stats.getAppliedUpdates();
-            int totalUpdates = stats.getTotalUpdates();
-            int scheduledSuccess = stats.getScheduledSuccess();
-            int scheduledUpdates = stats.getScheduledUpdates();
-            int addedSuccess = stats.getAddedSuccess();
-            int addedUpdates = stats.getAddedUpdates();
-            int cancelledSuccess = stats.getCancelledSuccess();
-            int cancelledUpdates = stats.getCancelledUpdates();
-            String feedId = stats.getFeedId();
+            try {
+                int appliedUpdates = stats.getAppliedUpdates();
+                int totalUpdates = stats.getTotalUpdates();
+                int scheduledSuccess = stats.getScheduledSuccess();
+                int scheduledUpdates = stats.getScheduledUpdates();
+                int addedSuccess = stats.getAddedSuccess();
+                int addedUpdates = stats.getAddedUpdates();
+                int cancelledSuccess = stats.getCancelledSuccess();
+                int cancelledUpdates = stats.getCancelledUpdates();
+                String feedId = stats.getFeedId();
 
-            publishMetric(feedId, "totalTripUpdatesSuccess", appliedUpdates);
-            publishMetric(feedId, "totalTripUpdatesFailed", totalUpdates - appliedUpdates);
-            publishMetric(feedId, "totalTripUpdates", totalUpdates);
-            publishMetric(feedId, "scheduledSuccess", scheduledSuccess);
-            publishMetric(feedId, "scheduledUpdates", scheduledUpdates);
-            publishMetric(feedId, "addedSuccess", addedSuccess);
-            publishMetric(feedId, "addedSuccess", addedUpdates);
-            publishMetric(feedId, "cancelledSuccess", cancelledSuccess);
-            publishMetric(feedId, "cancelledUpdates", cancelledUpdates);
+                publishMetric(feedId, "totalTripUpdatesSuccess", appliedUpdates);
+                publishMetric(feedId, "totalTripUpdatesFailed", totalUpdates - appliedUpdates);
+                publishMetric(feedId, "totalTripUpdates", totalUpdates);
+                publishMetric(feedId, "scheduledSuccess", scheduledSuccess);
+                publishMetric(feedId, "scheduledUpdates", scheduledUpdates);
+                publishMetric(feedId, "addedSuccess", addedSuccess);
+                publishMetric(feedId, "addedSuccess", addedUpdates);
+                publishMetric(feedId, "cancelledSuccess", cancelledSuccess);
+                publishMetric(feedId, "cancelledUpdates", cancelledUpdates);
 
-            publishMetric(feedId, "vehiclesInServicePct", getMetricPctValues(totalUpdates, appliedUpdates));
-            publishMetric(feedId, "scheduledTripsSuccessPct", getMetricPctValues(scheduledUpdates, scheduledSuccess));
-            publishMetric(feedId, "addedTripsSuccessPct", getMetricPctValues(addedUpdates, addedSuccess));
-            publishMetric(feedId, "cancelledTripsSuccessPct", getMetricPctValues(cancelledUpdates, cancelledSuccess));
+                publishMetric(feedId, "vehiclesInServicePct", getMetricPctValues(totalUpdates, appliedUpdates));
+                publishMetric(feedId, "scheduledTripsSuccessPct", getMetricPctValues(scheduledUpdates, scheduledSuccess));
+                publishMetric(feedId, "addedTripsSuccessPct", getMetricPctValues(addedUpdates, addedSuccess));
+                publishMetric(feedId, "cancelledTripsSuccessPct", getMetricPctValues(cancelledUpdates, cancelledSuccess));
+                _log.info("published scheduledSuccess=" + scheduledSuccess);
+            } catch (Exception any) {
+                _log.error("issue publishing metrics: " + any, any);
+            }
         } else {
             _log.info("cloudwatch not enabled, total updates {}", stats.getAppliedUpdates());
         }
