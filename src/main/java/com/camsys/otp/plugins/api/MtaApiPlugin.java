@@ -18,7 +18,7 @@ public class MtaApiPlugin implements Pluggable, OTPApplication.ApiPlugin {
 
     @Override
     public List<Class<?>> getClasses() {
-        return null;
+        return Collections.singletonList(TempRoutePatternsResource.class);
     }
 
     @Override
