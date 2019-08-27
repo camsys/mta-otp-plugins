@@ -31,7 +31,7 @@ import java.util.List;
  *
  *  Conceptually this is similar to IndexAPI.getPatternsForRoute, but includes more details and filtering options
  */
-@Path("/routers/{routerId}/patternsForRoute")
+@Path("/routers/{routerId}/tempPatternsForRoute")
 @XmlRootElement
 public class TempRoutePatternsResource {
 
