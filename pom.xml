@@ -153,14 +153,14 @@
 
   <distributionManagement>
     <repository>
-      <id>nexus.onebusaway.org-releases</id>
-      <name>Nexus Release Repo</name>
-      <url>http://nexus.onebusaway.org/content/repositories/releases/</url>
+      <id>releases-camsys-public-repo</id>
+      <name>Camsys Public Release Repo</name>
+      <url>s3://repo.camsys-apps.com/releases/</url>
     </repository>
     <snapshotRepository>
-      <id>nexus.onebusaway.org-snapshots</id>
-      <name>Nexus Snapshot Repo</name>
-      <url>http://nexus.onebusaway.org/content/repositories/snapshots/</url>
+      <id>snapshots-camsys-public-repo</id>
+      <name>Camsys Public Snapshot Repo</name>
+      <url>s3://repo.camsys-apps.com/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
