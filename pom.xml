@@ -10,7 +10,10 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <aws.version>1.11.602</aws.version>
-    <otp.version>@{project.version}</otp.version>
+    <releaseVersion>${project.version}</releaseVersion>
+
+    <!-- the maven release plugin sets this properly when invoked via Jenkins, overriding the above -->
+    <otp.version>${releaseVersion}</otp.version>
   </properties>
 
   <scm>
