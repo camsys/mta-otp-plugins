@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.camsys</groupId>
   <artifactId>mta-otp-plugins</artifactId>
-  <version>1.3.0.90-SNAPSHOT</version>
+  <version>1.3.0.89.4</version>
   <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,7 +17,7 @@
     <connection>scm:git:http://github.com/camsys/mta-otp-plugins.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/camsys/mta-otp-plugins.git</developerConnection>
     <url>http://github.com/camsys/mta-otp-plugins</url>
-    <tag>HEAD</tag>
+    <tag>mta-otp-plugins-1.3.0.89.4</tag>
   </scm>
 
   <repositories>
